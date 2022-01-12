@@ -12,7 +12,7 @@ export async function ensureAuthenticated(
   request: Request,
   response: Response,
   next: NextFunction,
-) {
+): Promise<void> {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
@@ -28,7 +28,7 @@ export async function ensureAuthenticated(
     ) as Payload;
 
     const usersRepository = new UsersRepository();
-    const user = usersRepository.findByID(user_id);
+    const user = await usersRepository.findByID(user_id);
 
     if (!user) {
       throw new AppError('User not found!', 401);

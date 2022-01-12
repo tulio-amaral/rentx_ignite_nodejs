@@ -3,6 +3,8 @@ import { Router } from 'express';
 import CreateSpecificationController from '@modules/cars/useCases/createSpecification/CreateSpecificationController';
 import { ensureAuthenticated } from '@shared/infra/http/middleware/ensureAuthenticated';
 
+import { ensureAdmin } from '../middleware/ensureAdmin';
+
 const createSpecificationController = new CreateSpecificationController();
 
 const specificationsRoutes = Router();
@@ -10,6 +12,7 @@ const specificationsRoutes = Router();
 specificationsRoutes.post(
   '/',
   ensureAuthenticated,
+  ensureAdmin,
   createSpecificationController.handle,
 );
 
